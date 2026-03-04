@@ -276,7 +276,7 @@ export default function BeatMaker() {
   const [currentStep, setCurrentStep] = useState(-1);
   const [user, setUser] = useState<any>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState<'signup' | 'login' | null>(null);
   const [showSavedBeatsModal, setShowSavedBeatsModal] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showSaveNameModal, setShowSaveNameModal] = useState(false);
@@ -458,7 +458,7 @@ export default function BeatMaker() {
   const handleSaveToCloud = () => {
     if (!user || !accessToken) {
       alert('Please log in to save beats to the cloud!');
-      setShowAuthModal(true);
+      setAuthModalMode('login');
       return;
     }
     setSaveNameInput('');
@@ -552,7 +552,7 @@ export default function BeatMaker() {
   const handleOpenSavedBeats = async () => {
     if (!user || !accessToken) {
       alert('Please log in to view saved beats!');
-      setShowAuthModal(true);
+      setAuthModalMode('login');
       return;
     }
     // Refresh session first to avoid stale token (fixes "Invalid JWT")
@@ -655,10 +655,10 @@ export default function BeatMaker() {
               </div>
             ) : (
               <>
-                <Button onClick={() => setShowAuthModal(true)}>
+                <Button onClick={() => setAuthModalMode('signup')}>
                   <p className="font-['Geist:Medium',sans-serif] font-medium leading-[normal] relative shrink-0 text-[#f8fafc] text-[16px]">Sign Up</p>
                 </Button>
-                <Button1 onClick={() => setShowAuthModal(true)}>
+                <Button1 onClick={() => setAuthModalMode('login')}>
                   <p className="font-['Geist:Medium',sans-serif] font-medium leading-[normal] relative shrink-0 text-[#f1f5f9] text-[16px]">Log In</p>
                 </Button1>
               </>
@@ -814,10 +814,11 @@ export default function BeatMaker() {
         </div>
       </div>
       <AuthModal
-        isOpen={showAuthModal}
-        onClose={() => setShowAuthModal(false)}
+        isOpen={authModalMode !== null}
+        onClose={() => setAuthModalMode(null)}
         onSignUp={handleSignUp}
         onLogin={handleLogin}
+        initialMode={authModalMode ?? 'signup'}
       />
       <SavedBeatsModal
         isOpen={showSavedBeatsModal}

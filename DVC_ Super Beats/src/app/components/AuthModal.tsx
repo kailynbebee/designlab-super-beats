@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 
 interface AuthModalProps {
@@ -6,10 +6,17 @@ interface AuthModalProps {
   onClose: () => void;
   onSignUp: (email: string, password: string, name: string) => Promise<void>;
   onLogin: (email: string, password: string) => Promise<void>;
+  initialMode?: 'signup' | 'login';
 }
 
-export default function AuthModal({ isOpen, onClose, onSignUp, onLogin }: AuthModalProps) {
-  const [isSignUp, setIsSignUp] = useState(true);
+export default function AuthModal({ isOpen, onClose, onSignUp, onLogin, initialMode = 'signup' }: AuthModalProps) {
+  const [isSignUp, setIsSignUp] = useState(initialMode === 'signup');
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsSignUp(initialMode === 'signup');
+    }
+  }, [isOpen, initialMode]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
