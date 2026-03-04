@@ -1,0 +1,11 @@
+# Supabase project config - used when deploying Edge Functions via CLI
+# See https://supabase.com/docs/guides/cli/config
+
+[api]
+enabled = true
+
+[functions]
+# make-server-4266c10f - we verify JWT manually in code (getUserFromToken)
+# Gateway verify_jwt causes "Invalid JWT" with some Supabase projects (ES256/HS256 mismatch)
+[functions.make-server-4266c10f]
+verify_jwt = false
