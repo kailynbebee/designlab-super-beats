@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { projectId, publicAnonKey } from '/utils/supabase/info';
+import { projectId, publicAnonKey } from '@/utils/supabase/info';
 import { supabase } from '../../lib/supabase';
 import svgPaths from "../../imports/svg-2blbi7adm0";
 import AuthModal from './AuthModal';

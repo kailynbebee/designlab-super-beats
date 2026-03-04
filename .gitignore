@@ -1,2 +1,17 @@
+# Dependencies
+node_modules
+
+# Env (never commit secrets)
+.env
+.env.local
+.env.*.local
+
+# Build
+dist
+
+# IDE / OS
+.DS_Store
+*.log
+
 # Supabase local temp
 supabase/.temp
